@@ -33,6 +33,13 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+                <!-- cn-tools 20150126 anf -->
+                <field name="turbo" type="list" default="0" label="PLG_CONTENT_SIGE_THUMBSTURBO" description="PLG_CONTENT_SIGE_THUMBSTURBODESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                    <option value="new">PLG_CONTENT_SIGE_NEW</option>
+                </field>
+                <!-- cn-tools 20150126 end -->
                 <field name="root" type="list" default="0" label="PLG_CONTENT_SIGE_ROOT" description="PLG_CONTENT_SIGE_ROOTDESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
@@ -190,7 +197,10 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-                <field name="watermarkposition" type="list" default="0" label="PLG_CONTENT_SIGE_WATERMARKPOSITION" description="">
+                <!-- cn-tools 20150126 anf -->
+                <field name="watermarkimage" type="media" default="" label="PLG_CONTENT_SIGE_WATERMARKIMAGE" description="PLG_CONTENT_SIGE_WATERMARKIMAGEDESC" />
+                <!-- cn-tools 20150126 end -->
+				<field name="watermarkposition" type="list" default="0" label="PLG_CONTENT_SIGE_WATERMARKPOSITION" description="">
                     <option value="0">CENTER</option>
                     <option value="1">PLG_CONTENT_SIGE_TOPLEFT</option>
                     <option value="2">PLG_CONTENT_SIGE_TOPRIGHT</option>

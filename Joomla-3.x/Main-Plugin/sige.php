@@ -421,21 +421,23 @@ class plgContentSige extends JPlugin
                             $noimage = 1;
                         }
 
-                        $html = '<!-- Simple Image Gallery Extended - Plugin Joomla! 3 - Kubik-Rubik Joomla! Extensions -->';
+                        $html = '<!-- Simple Image Gallery Extended Edition CN-Tools - Plugin Joomla! 3 - Kubik-Rubik Joomla! Extensions -->';
 
+                        // cn-tools 20150126 anf - add '$this->_params['ulid']' 
                         if($this->_params['single'] AND $single_yes AND !$this->_params['word'])
                         {
-                            $html .= '<ul class="sige_single">';
+                            $html .= '<ul id="'.$this->_params['ulid'].'" class="sige_single">';
                         }
                         elseif(!$this->_params['list'] AND !$this->_params['word'])
                         {
-                            $html .= '<ul class="sige">';
+                            $html .= '<ul id="'.$this->_params['ulid'].'" class="sige">';
                         }
 
                         if($this->_params['list'] AND !$this->_params['word'])
                         {
-                            $html .= '<ul>';
+                            $html .= '<ul id="'.$this->_params['ulid'].'">';
                         }
+                        // cn-tools 20150126 end
 
                         for($a = 0; $a < $noimage; $a++)
                         {
@@ -494,7 +496,9 @@ class plgContentSige extends JPlugin
 
     private function setParams()
     {
-        $params = array('width', 'height', 'ratio', 'gap_v', 'gap_h', 'quality', 'quality_png', 'displaynavtip', 'navtip', 'limit', 'displaymessage', 'message', 'thumbs', 'thumbs_new', 'view', 'limit_quantity', 'noslim', 'caption', 'iptc', 'iptcutf8', 'print', 'salign', 'connect', 'download', 'list', 'crop', 'crop_factor', 'sort', 'single', 'thumbdetail', 'watermark', 'encrypt', 'image_info', 'image_link', 'image_link_new', 'single_gallery', 'column_quantity', 'css_image', 'css_image_half', 'copyright', 'word', 'watermarkposition', 'watermarkimage', 'watermark_new', 'root', 'js', 'calcmaxthumbsize', 'fileinfo', 'turbo', 'resize_images', 'width_image', 'height_image', 'ratio_image', 'images_new', 'scaption');
+        // cn-tools 20150126 anf - add ulid
+        $params = array('width', 'height', 'ratio', 'gap_v', 'gap_h', 'quality', 'quality_png', 'displaynavtip', 'navtip', 'limit', 'displaymessage', 'message', 'thumbs', 'thumbs_new', 'view', 'limit_quantity', 'noslim', 'caption', 'iptc', 'iptcutf8', 'print', 'salign', 'connect', 'download', 'list', 'crop', 'crop_factor', 'sort', 'single', 'thumbdetail', 'watermark', 'encrypt', 'image_info', 'image_link', 'image_link_new', 'single_gallery', 'column_quantity', 'css_image', 'css_image_half', 'copyright', 'word', 'watermarkposition', 'watermarkimage', 'watermark_new', 'root', 'js', 'calcmaxthumbsize', 'fileinfo', 'turbo', 'resize_images', 'width_image', 'height_image', 'ratio_image', 'images_new', 'scaption', 'ulid');
+        // cn-tools 20150126 end
 
         foreach($params as $value)
         {
@@ -507,6 +511,10 @@ class plgContentSige extends JPlugin
         {
             $_SESSION['sigcount'] = $count;
         }
+		if(empty($this->_params['ulid']))
+		{
+			$this->_params['ulid'] = md5(time());
+		}
     }
 
     private function getParams($param, $syntax_only = 0)
@@ -646,7 +654,7 @@ class plgContentSige extends JPlugin
                 {
                     if($this->_params['watermarkimage'])
                     {
-                        $watermarkimage = imagecreatefrompng($this->_absolute_path.'/plugins/content/sige/plugin_sige/'.$this->_params['watermarkimage']);
+                        $watermarkimage = imagecreatefrompng($this->_absolute_path.'/'.$this->_params['watermarkimage']);
                     }
                     else
                     {
@@ -1327,52 +1335,54 @@ class plgContentSige extends JPlugin
                     }
                 }
 
+                // cn-tools 20150126 anf - add 'ulid'
                 if($this->_params['connect'])
                 {
                     if($this->_params['view'] == 0 OR $this->_params['view'] == 5)
                     {
-                        $html .= ' rel="lightbox.sig'.$this->_params['connect'].'"';
+                        $html .= ' rel="lightbox.sig'.$this->_params['connect'].'.'.$this->_params['ulid'].'"';
                     }
                     elseif($this->_params['view'] == 1)
                     {
-                        $html .= ' rel="lytebox.sig'.$this->_params['connect'].'"';
+                        $html .= ' rel="lytebox.sig'.$this->_params['connect'].'.'.$this->_params['ulid'].'"';
                     }
                     elseif($this->_params['view'] == 2)
                     {
-                        $html .= ' rel="lyteshow.sig'.$this->_params['connect'].'"';
+                        $html .= ' rel="lyteshow.sig'.$this->_params['connect'].'.'.$this->_params['ulid'].'"';
                     }
                     elseif($this->_params['view'] == 3)
                     {
-                        $html .= ' rel="shadowbox[sig'.$this->_params['connect'].']"';
+                        $html .= ' rel="shadowbox[sig'.$this->_params['connect'].'.'.$this->_params['ulid'].']"';
                     }
                     elseif($this->_params['view'] == 4)
                     {
-                        $html .= ' data-milkbox="milkbox-'.$this->_params['connect'].'"';
+                        $html .= ' data-milkbox="milkbox-'.$this->_params['connect'].'.'.$this->_params['ulid'].'"';
                     }
                 }
                 else
                 {
                     if($this->_params['view'] == 0 OR $this->_params['view'] == 5)
                     {
-                        $html .= ' rel="lightbox.sig'.$_SESSION["sigcount"].'"';
+                        $html .= ' rel="lightbox.sig'.$_SESSION["sigcount"].'.'.$this->_params['ulid'].'"';
                     }
                     elseif($this->_params['view'] == 1)
                     {
-                        $html .= ' rel="lytebox.sig'.$_SESSION["sigcount"].'"';
+                        $html .= ' rel="lytebox.sig'.$_SESSION["sigcount"].'.'.$this->_params['ulid'].'"';
                     }
                     elseif($this->_params['view'] == 2)
                     {
-                        $html .= ' rel="lyteshow.sig'.$_SESSION["sigcount"].'"';
+                        $html .= ' rel="lyteshow.sig'.$_SESSION["sigcount"].'.'.$this->_params['ulid'].'"';
                     }
                     elseif($this->_params['view'] == 3)
                     {
-                        $html .= ' rel="shadowbox[sig'.$_SESSION["sigcount"].']"';
+                        $html .= ' rel="shadowbox[sig'.$_SESSION["sigcount"].'.'.$this->_params['ulid'].']"';
                     }
                     elseif($this->_params['view'] == 4)
                     {
-                        $html .= ' data-milkbox="milkbox-'.$_SESSION["sigcount"].'"';
+                        $html .= ' data-milkbox="milkbox-'.$_SESSION["sigcount"].'.'.$this->_params['ulid'].'"';
                     }
                 }
+                // cn-tools 20150126 end
 
                 $html .= ' title="';
 
