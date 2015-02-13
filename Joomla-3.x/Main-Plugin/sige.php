@@ -1465,6 +1465,7 @@ class plgContentSige extends JPlugin
                 {
                     if($this->_params['thumbs'])
                     {
+                        $image_size = '';
                         $html .= '<img alt="'.$image_title.'" title="'.$image_title;
 
                         if($image_description)
@@ -1474,12 +1475,13 @@ class plgContentSige extends JPlugin
 
                         if($this->_params['watermark'])
                         {
-                            $html .= '" src="'.$this->_live_site.$this->_rootfolder.$this->_images_dir.'/thumbs/'.$image_hash.'" />';
+                            $lFileName = $this->_live_site.$this->_rootfolder.$this->_images_dir.'/thumbs/'.$image_hash;
                         }
                         else
                         {
-                            $html .= '" src="'.$this->_live_site.$this->_rootfolder.$this->_images_dir.'/thumbs/'.$image.'" />';
+                            $lFileName = $this->_live_site.$this->_rootfolder.$this->_images_dir.'/thumbs/'.$image;
                         }
+                        $html .= '" src="'.$lFileName.'"'.$this->getimagesizetext($lFileName).' />';
                     }
                     else
                     {
@@ -1697,6 +1699,20 @@ class plgContentSige extends JPlugin
         }
 
         return $file_info;
+    }
+	
+    private function getimagesizetext($imagefilename)
+    {
+        $lResult = '';
+        if ($imagefilename!='')
+		{
+            $image_data = @getimagesize($imagefilename);
+            if (isset($image_data))
+            {
+				$lResult = ' width="'.$image_data[0].'px" height="'.$image_data[1].'px"';
+            }
+		}
+        return $lResult;
     }
 
     private function crop($width_ori, $height_ori)
